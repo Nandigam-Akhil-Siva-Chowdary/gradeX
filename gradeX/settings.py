@@ -24,11 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-(m1@vd5376d59aa^6umpp6)oq0lokah*6fm)d1*sx7m@i+nh4_"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 #ALLOWED_HOSTS = ["AkhilSivaChowdary.pythonanywhere.com"]
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'gradeX.onrender.com']
 
 
 
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "gradeX.urls"
@@ -78,12 +79,25 @@ WSGI_APPLICATION = "gradeX.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# gradeX/settings.py
+
+# Replace the DATABASES section with:
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'gradeX',  # Your database name in MongoDB Atlas
+        'CLIENT': {
+            'host': 'mongodb+srv://Akhil2310:Hasi2310@nexora.j9i1s4f.mongodb.net/',
+            'username': 'Akhil2310',
+            'password': 'Hasi2310',
+            'authSource': 'admin',
+            'authMechanism': 'SCRAM-SHA-1',
+        }
     }
 }
+
+# Add this setting for Djongo compatibility
+DJONGO_AUTO_CREATE_INDEX = True
 
 
 
@@ -122,11 +136,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "calculator" / "static"]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [BASE_DIR / "calculator" / "static"] # Already present
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Already present
 
-
-
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+import os
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -7,9 +7,9 @@ class SubjectGradeInline(admin.TabularInline):
 
 @admin.register(StudentRecord)
 class StudentRecordAdmin(admin.ModelAdmin):
-    list_display = ('name', 'reg_number', 'branch', 'calculation_type', 'get_result', 'created_at')
+    list_display = ('name', 'reg_number', 'get_branch_display', 'calculation_type', 'get_result', 'created_at')
     list_filter = ('calculation_type', 'branch', 'created_at')
-    search_fields = ('name', 'reg_number', 'branch')
+    search_fields = ('name', 'reg_number')
     readonly_fields = ('created_at',)
     inlines = [SubjectGradeInline]
     
@@ -21,8 +21,8 @@ class StudentRecordAdmin(admin.ModelAdmin):
             'fields': ('sgpa',),
             'classes': ('collapse',)
         }),
-        ('CGPA Calculation', {
-            'fields': ('sem1_gpa', 'sem2_gpa', 'cgpa'),
+        ('CGPA Calculation (3 Semesters)', {
+            'fields': ('sem1_gpa', 'sem2_gpa', 'sem3_gpa', 'cgpa'),
             'classes': ('collapse',)
         }),
         ('Record Information', {
