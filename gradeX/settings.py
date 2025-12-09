@@ -28,7 +28,7 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 #ALLOWED_HOSTS = ["AkhilSivaChowdary.pythonanywhere.com"]
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'gradeX.onrender.com', ''gradex-ogwk.onrender.com'']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'gradeX.onrender.com', 'gradex-ogwk.onrender.com']
 
 
 
